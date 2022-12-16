@@ -4,15 +4,14 @@
 
 echo "Installing Kubernetes"
 
-apt update
-apt install docker.io
+apt install -o Apt::Get::Assume-Yes=true docker.io
 systemctl enable docker
 systemctl start docker
-apt install apt-transport-https curl
+apt install -o Apt::Get::Assume-Yes=true apt-transport-https curl
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add
 # apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-jammy main"
-apt install kubeadm kubelet kubectl kubernetes-cni
+apt install -o Apt::Get::Assume-Yes=true kubeadm kubelet kubectl kubernetes-cni
 swapoff -a
 # I'm think swap is turned off in the minification script, but I'm not sure yet.
 sed -i '/swapfile/d' /etc/fstab

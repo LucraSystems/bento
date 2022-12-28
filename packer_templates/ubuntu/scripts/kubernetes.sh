@@ -9,8 +9,8 @@ systemctl enable docker
 systemctl start docker
 apt install -y apt-transport-https curl
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add
-# apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
-apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-jammy main"
+apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+# apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-jammy main"
 apt install -y kubeadm kubelet kubectl kubernetes-cni
 swapoff -a
 # I'm think swap is turned off in the minification script, but I'm not sure yet.

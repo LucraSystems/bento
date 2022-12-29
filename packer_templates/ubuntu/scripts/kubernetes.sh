@@ -52,6 +52,8 @@ apt install -y kubeadm kubelet kubectl kubernetes-cni
 swapoff -a
 sed -i '/swapfile/d' /etc/fstab
 hostnamectl set-hostname kubernetes-master # This will have to be different for the worker node image
+systemctl restart kubelet
+systemctl status kubelet
 kubeadm init
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config

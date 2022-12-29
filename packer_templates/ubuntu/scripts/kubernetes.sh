@@ -27,6 +27,7 @@ apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 apt install -y kubeadm kubelet kubectl kubernetes-cni
 swapoff -a
 sed -i '/swapfile/d' /etc/fstab
+sed -i '/ swap / s/^/#/' /etc/fstab
 hostnamectl set-hostname kubernetes-master # This will have to be different for the worker node image
 
 # Install and Configure containerd
@@ -55,8 +56,8 @@ systemctl status kubelet
 
 # kubeadm init
 
-mkdir -p $HOME/.kube
-cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-chown $(id -u):$(id -g) $HOME/.kube/config
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml
+# mkdir -p $HOME/.kube
+# cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+# chown $(id -u):$(id -g) $HOME/.kube/config
+# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml

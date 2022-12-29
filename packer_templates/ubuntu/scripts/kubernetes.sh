@@ -11,14 +11,10 @@ apt install -y apt-transport-https curl wget
 apt install -y docker.io
 cat > /etc/docker/daemon.json <<EOF
 {
-  "exec-opts": ["native.cgroupdriver=systemd"],
-  "log-driver": "json-file",
-  "log-opts": {
-    "max-size": "100m"
-  },
-  "storage-driver": "overlay2"
+    "exec-opts": ["native.cgroupdriver=systemd"]
 }
 EOF
+cat /etc/docker/daemon.json
 systemctl daemon-reload
 systemctl enable docker
 systemctl start docker

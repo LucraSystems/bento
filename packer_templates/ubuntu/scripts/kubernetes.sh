@@ -53,7 +53,7 @@ systemctl status containerd
 systemctl restart kubelet
 systemctl status kubelet
 
-kubeadm init
+# kubeadm init
 
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config

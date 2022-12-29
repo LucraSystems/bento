@@ -18,6 +18,16 @@ cat /etc/docker/daemon.json
 systemctl daemon-reload
 systemctl enable docker
 systemctl start docker
+systemctl status docker
+
+# Install and Initialize Kubernetes
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add
+apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+# apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-jammy main"
+apt install -y kubeadm kubelet kubectl kubernetes-cni
+swapoff -a
+sed -i '/swapfile/d' /etc/fstab
+hostnamectl set-hostname kubernetes-master # This will have to be different for the worker node image
 
 # Install and Configure containerd
 # How to install the Containerd runtime engine on Ubuntu Server 22.04
@@ -39,18 +49,12 @@ curl -L https://raw.githubusercontent.com/containerd/containerd/main/containerd.
 systemctl daemon-reload
 systemctl enable containerd
 systemctl start containerd
-
-# Install and Initialize Kubernetes
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add
-apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
-# apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-jammy main"
-apt install -y kubeadm kubelet kubectl kubernetes-cni
-swapoff -a
-sed -i '/swapfile/d' /etc/fstab
-hostnamectl set-hostname kubernetes-master # This will have to be different for the worker node image
+systemctl status containerd
 systemctl restart kubelet
 systemctl status kubelet
+
 kubeadm init
+
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config

@@ -5,6 +5,7 @@
 echo "Installing Kubernetes"
 
 # Install Dependencies
+swapoff -a
 apt install -y apt-transport-https curl wget
 
 # Install and Configure Docker
@@ -25,9 +26,6 @@ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add
 apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 # apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-jammy main"
 apt install -y kubeadm kubelet kubectl kubernetes-cni
-swapoff -a
-sed -i '/swapfile/d' /etc/fstab
-sed -i '/ swap / s/^/#/' /etc/fstab
 hostnamectl set-hostname kubernetes-master # This will have to be different for the worker node image
 
 # Install and Configure containerd
@@ -54,10 +52,10 @@ systemctl status containerd
 systemctl restart kubelet
 systemctl status kubelet
 
-# kubeadm init
+kubeadm init --pod-network-cidr=10.244.0.0/16
 
-# mkdir -p $HOME/.kube
-# cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-# chown $(id -u):$(id -g) $HOME/.kube/config
-# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml
+mkdir -p $HOME/.kube
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml

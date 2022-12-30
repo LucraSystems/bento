@@ -230,6 +230,7 @@
     {
       "environment_vars": [
         "HOME_DIR=/home/vagrant",
+        "DESIRED_HOSTNAME={{user `hostname`}}",
         "http_proxy={{user `http_proxy`}}",
         "https_proxy={{user `https_proxy`}}",
         "no_proxy={{user `no_proxy`}}"
@@ -264,6 +265,7 @@
     "git_revision": "__unknown_git_revision__",
     "guest_additions_url": "",
     "headless": "",
+    "hostname": "default",
     "http_directory": "{{template_dir}}/http",
     "http_proxy": "{{env `http_proxy`}}",
     "https_proxy": "{{env `https_proxy`}}",

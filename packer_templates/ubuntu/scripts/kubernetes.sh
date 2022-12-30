@@ -36,7 +36,7 @@ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add
 apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 # apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-jammy main"
 apt install -y kubeadm kubelet kubectl kubernetes-cni
-hostnamectl set-hostname kubernetes-master # This will have to be different for the worker node image
+hostnamectl set-hostname ${DESIRED_HOSTNAME}
 
 # Install and Configure containerd
 # How to install the Containerd runtime engine on Ubuntu Server 22.04
